@@ -3,7 +3,7 @@ Charge
 
 #####Installation
 ```
-npm install charge
+> npm install charge
 var charge = require("charge");
 ```
 
