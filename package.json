@@ -22,6 +22,9 @@
     "arguments",
     "check"
   ],
+  "files": [
+    "lib"
+  ],
   "author": "Reece Hudson <reecehudson10@gmail.com>",
   "license": "MIT",
   "bugs": {
