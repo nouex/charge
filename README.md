@@ -3,7 +3,7 @@ Charge
 
 #####Installation
 ```
-> npm install charge
+> npm install ch-arge
 var charge = require("charge");
 ```
 
