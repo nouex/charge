@@ -1,0 +1,31 @@
+{
+  "name": "charge",
+  "version": "1.0.0",
+  "description": "javascript arguments checker",
+  "main": "lib/index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "jasmine test/"
+  },
+  "devDependencies": {
+    "debug": ">=2.2.0",
+    "jasmine": "~2.3.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/reecehudson/charge.git"
+  },
+  "keywords": [
+    "args",
+    "arguments",
+    "check"
+  ],
+  "author": "Reece Hudson <reecehudson10@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/reecehudson/charge/issues"
+  },
+  "homepage": "https://github.com/reecehudson/charge#readme"
+}
