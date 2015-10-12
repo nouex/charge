@@ -24,7 +24,8 @@ function accountInfo(name, birthyear, data) {
 
 In order to enable easy checkup of a value, if a string is used as the
 second arguments to `charge`, it is parsed using the supported types.
-This way, a single argument may be multiple types. `!` negates, `|` is or.
+* `!` negates a type
+* `,` seperates possibilities
 
 ```
 function accountInfo(name, birthyear, data) {
@@ -39,18 +40,25 @@ function accountInfo(name, birthyear, data) {
 #####Supported Types
 
 
-|Type       |Supported As | Shorthand |
-|-----------|-------------|-----------|
-|Object     |"Object"     |"Obj"      |
-|Array      |"Array"      |"Arr"      |
-|Function   |"Function"   |"Func"     |
-|RegExp     |"RegExp"     |"Reg"      |
-|Date       |"Date"       |           |
-|Symbol     |"Symbol"     |"Str"      |
-|null       |"null"       |           |
-|undefined  |"undefined"  |           |
-|string     |"string"     |"str"      |
-|number     |"number"     |"num"      |
-|integer    |"integer"    |"int"      |
-|float      |"float"      |"flt"      |
-|boolean    |"boolean"    |"bool"     |
+|*Type*     |*Supported As*   |*Shorthand*|
+|-----------|-----------------|-----------|
+|Complex Types                            |
+|-----------------------------------------|
+|Object     |"Object"         |"Obj"      |
+|Array      |"Array"          |"Arr"      |
+|Function   |"Function"       |"Func","fn"|
+|RegExp     |"RegExp"         |"Reg"      |
+|Date       |"Date"           |           |
+|Symbol     |"Symbol"         |"Sym"      |
+|String     |"String"         |"Str"      |
+|Number     |"Number"         |"Num"      |
+|Boolean    |"Boolean"        |"Bool"     |
+|Primitive Types                          |
+|-----------------------------------------|
+|null       |"null"           |           |
+|undefined  |"undefined"      |           |
+|string     |"string"         |"str"      |
+|number     |"number"         |"num"      |
+|integer    |"integer"        |"int"      |
+|float      |"float"          |"flt"      |
+|boolean    |"boolean"        |"bool"     |
