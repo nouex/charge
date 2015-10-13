@@ -1,7 +1,7 @@
 "use strict";
 
-typeof process.env.DEBUG === "string" ? process.env.DEBUG += ",index.js" :
-process.env.DEBUG = "index.js";
+typeof process.env.DEBUG === "string" ? process.env.DEBUG += ",ch-arge:index.js" :
+process.env.DEBUG = "ch-arge:index.js";
 
 var charge = require("../lib");
 var assert = require("assert");
