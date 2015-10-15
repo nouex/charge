@@ -23,3 +23,6 @@ assert.ok(charge([], "arr"));
 
 // same with more possibilites
 assert(charge({}, "array object"));
+
+// arg error
+assert.throws(function() {charge([], "str")});
