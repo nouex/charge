@@ -25,4 +25,4 @@ assert.ok(charge([], "arr"));
 assert(charge({}, "array object"));
 
 // arg error
-assert.throws(function() {charge([], "str")});
+assert.throws(function() {charge([], "str")}, charge.ArgError);
