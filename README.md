@@ -42,7 +42,7 @@ function accountInfo(name, birthyear, data) {
 
 |*Type*     |*Supported As*   |*Shorthand*|
 |-----------|-----------------|-----------|
-|Complex Types                            |
+|**Complex Types**                        |
 |                                         |
 |Object     |"Object"         |"Obj"      |
 |Array      |"Array"          |"Arr"      |
@@ -53,7 +53,7 @@ function accountInfo(name, birthyear, data) {
 |String     |"String"         |"Str"      |
 |Number     |"Number"         |"Num"      |
 |Boolean    |"Boolean"        |"Bool"     |
-|Primitive Types                          |
+|**Primitive Types**                      |
 |                                         |
 |null       |"null"           |           |
 |undefined  |"undefined"      |           |
