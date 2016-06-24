@@ -4,7 +4,7 @@ Charge
 #####Installation
 ```cmd
 > npm install ch-arge
-var charge = require("charge");
+var charge = require("ch-arge");
 ```
 
 #####Usage
