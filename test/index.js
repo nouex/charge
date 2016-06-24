@@ -25,4 +25,9 @@ assert.ok(charge([], "arr"));
 assert(charge({}, "array object"));
 
 // arg error
-assert.throws(function() {charge([], "str")});
+assert.throws(function() {charge([], "str")}, charge.ArgError);
+// argError instanceof Error
+assert.equal(true, (new charge.ArgError) instanceof Error);
+
+// argError instanceof ArgError
+assert.equal(true, (new charge.ArgError) instanceof charge.ArgError);
