@@ -1,3 +1,5 @@
+![Travis Build Status](https://travis-ci.org/reecehudson/charge.svg)
+
 Charge
 ======
 
