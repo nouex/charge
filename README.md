@@ -2,13 +2,13 @@ Charge
 ======
 
 #####Installation
-```
+```cmd
 > npm install ch-arge
 var charge = require("charge");
 ```
 
 #####Usage
-```
+```js
 // TODO: sync with example
 
 function accountInfo(name, birthyear, data) {
@@ -27,7 +27,7 @@ second arguments to `charge`, it is parsed using the supported types.
 * `!` negates a type
 * `,` seperates possibilities
 
-```
+```js
 function accountInfo(name, birthyear, data) {
   charge(name, "str"); // shorthand "string" type
   charge(birthyear, "Date|int");
