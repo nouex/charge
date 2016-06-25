@@ -1,4 +1,4 @@
-![Travis Build Status](https://travis-ci.org/reecehudson/charge.svg)
+![Travis Build Status](https://travis-ci.org/reecehudson/charge.svg) ![npm version badge] (https://img.shields.io/npm/v/ch-arge.svg)
 
 Charge
 ======
