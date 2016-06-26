@@ -8,80 +8,163 @@ describe("check functions", function () {// TODO counter-test
 
     goodArgs = {
       "Object": [
-        {}
+        {},
+        [],
+        Object.create(Object.prototype)
       ],
       "Array": [
-        []
+        [],
+        new Array,
+        Array(10)
       ],
       "Function": [
         Function,
-        function () {}
+        function () {},
+        Object
       ],
       "RegExp": [
-        /blah/
+        /blah/,
+        new RegExp,
+        RegExp(),
+        Object.create(RegExp.prototype)
       ],
       "Date": [
-        new Date
+        new Date,
+        Object.create(Date.prototype)
       ],
       "Symbol": [
         Symbol()
       ],
       "String": [
-        new String()
+        new String(),
+        Object.create(String.prototype)
       ],
       "Number": [
-        new Number()
+        new Number(),
+        Object.create(Object.getPrototypeOf(4))
       ],
       "Boolean": [
-        new Boolean()
+        new Boolean(),
+        Object.create(Boolean.prototype)
       ],
       "null": [
         null
       ],
       "undefined": [
-        undefined
+        undefined,
+        root.undefined
       ],
       "string": [
-        "blah"
+        "blah",
+        "",
+        String(),
+        String(144)
       ],
       "number": [
-        18
+        18,
+        18.8,
+        Infinity
       ],
       "integer": [
-        18
+        18,
+        -18
       ],
       "float": [
-        18.5
+        18.5,
+        -18.5,
+        Infinity,
+        -Infinity
       ],
       "boolean": [
         true,
         false,
-        true
+        true,
+        Boolean(0),
+        Boolean(""),
+        Boolean(new Boolean)
       ]
     };
 
     badArgs = {
       "Object": [
-        Object.create(null)
+        Object.create(null),
+        null
       ],
       "Array": [
         {},
         null,
-        undefined
+        undefined,
+        Object.create(Array.prototype)
       ],
       "Function": [
         {},
-        []
+        [],
+        Object.create(Function.prototype),
+        Function.prototype
       ],
       "RegExp": [
         {},
         []
       ],
+      "Date": [
+        [],
+        {},
+        Date()// -> string format
+      ],
+      "String": [
+        String(),
+        ""
+      ],
+      "Number": [
+        Number(),
+        4,
+        4.4,
+        Infinity,
+        -Infinity,
+        NaN
+      ],
+      "Boolean": [
+        true,
+        false,
+        Boolean(0),
+        Boolean("true")
+      ],
+      "null": [
+        {},
+        undefined,
+        "",
+        0
+      ],
+      "undefined": [
+        null,
+        0,
+        "",
+        false
+      ],
+      "string": [
+        new String,
+        Object.create(Object.getPrototypeOf(""))
+      ],
+      "number": [
+        new Number,
+        Object.create(Number.prototype),
+        NaN
+      ],
       "integer": [
-        3.3
+        3.3,
+        NaN,
+        Infinity
       ],
       "float": [
-        3
+        3,
+        NaN
+      ],
+      "boolean": [
+        new Boolean(0),
+        Infinity,
+        0,
+        NaN,
+        ""
       ]
     };
 
@@ -170,11 +253,17 @@ function debug (section, goodArg, expType, checkFn, subj) {
       crlf = "\r\n",
       sp = "\u0020",
       arrow = "->",
-      subjString = null != subj && subj.toString !== undefined ?
-                    subj.toString() :
-                    util.inspect(subj, {depth: 1, colors: false}),
+      subjString,
       subjTypeof = typeof subj,
       checkFnRet = checkFn(subj);
+
+      try {
+        subjString = null != subj && subj.toString !== undefined ?
+                      subj.toString() :
+                      util.inspect(subj, {depth: 1, colors: false});
+      } catch (e) {
+        subjString = "";
+      }
 
   console.error(
     section + crlf +
