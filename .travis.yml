@@ -7,3 +7,5 @@ node_js:
   - "iojs"
 before_script:
       - jasmine init # a default jasmien init, nothing custom
+script:
+  npm run-script test
