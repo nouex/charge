@@ -75,6 +75,9 @@ describe("parameters", function () {
     expect (
       charge("blah", "!null", false)
     ).toBe(true);
+    // doen't repeat construcor checking
+    // check log
+    charge(new String, String, String);
   });
 
   it ("boolean should throw", function () {
