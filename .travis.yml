@@ -3,7 +3,5 @@ node_js:
   - "4.1"
   - "4.0"
   - "iojs"
-before_script:
-      - jasmine init # a default jasmien init, nothing custom
 script:
   npm run-script test
