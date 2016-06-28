@@ -4,34 +4,25 @@ typeof process.env.DEBUG === "string" ? process.env.DEBUG += ",ch-arge:index.js"
 process.env.DEBUG = "ch-arge:index.js";
 
 var charge = require("../lib");
-var assert = require("assert");
+var types = require("../lib/types.js");
 var EE = require("events");
 
-// charge with arg as expected instance of constructor
-assert(charge([], Array));
+describe ("use case", function () {
+  it ("instance of", function () {
+    expect(charge.bind(null, [], Array)).not.toThrow();
+    expect(charge.bind(null, [], Object)).not.toThrow();
+  });
 
-assert.doesNotThrow(function(){charge([], Object)});
+  it ("instance of, use ret", function () {
+    expect(charge("", Object, false)).toBe(false);
+  });
 
-assert.equal(charge([], Object, false), true);
-
-assert.equal(charge("", Object, false), false);
-
-// charge with string as second arg
-assert.ok(charge([], "array"));
-
-// same with shorthand
-assert.ok(charge([], "arr"));
-
-// same with more possibilites
-assert(charge({}, "array object"));
-
-// arg error
-assert.throws(function() {charge([], "str")}, charge.ArgError);
-// argError instanceof Error
-assert.equal(true, (new charge.ArgError) instanceof Error);
-
-// argError instanceof ArgError
-assert.equal(true, (new charge.ArgError) instanceof charge.ArgError);
+  it ("aliases", function () {
+    charge([], "array");
+    charge([], "arr");
+    charge({}, "array object");
+  });
+});
 
 describe("parameters", function () {
   it ("arg", function () {
@@ -71,10 +62,6 @@ describe("parameters", function () {
     expect (
       charge(null, "Object, obj", "undefined|null", false)
     ).toBe(true);
-    // negated
-    expect (
-      charge("blah", "!null", false)
-    ).toBe(true);
     // doen't repeat construcor checking
     // check log
     charge(new String, String, String);
@@ -94,4 +81,74 @@ describe("parameters", function () {
       charge("blah", String, false)
     ).toBe(false);
   });
+
+  it ("negated type", function () {
+    // negated
+    expect (
+      charge("blah", "!null", false)
+    ).toBe(true);
+    // double negated
+    expect (
+      charge(null, "!!null", false)
+    ).toBe(true);
+    // triple negated
+    expect (
+      charge("blah", "!!!null", false)
+    ).toBe(true);
+  });
 });
+
+describe ("ArgError", function () {
+  it ("instanceof", function () {
+    expect(
+      function () {
+        charge([], "str", true)
+      }
+    ).toThrowError(charge.ArgError);
+    expect((new charge.ArgError) instanceof charge.ArgError).toBe(true);
+  });
+});
+
+describe ("newType()", function () {
+  var newType = charge.newType;
+
+  it ("adds a new type", function () {
+    var name = "pear";
+    expect(mayUseName(name)).toBe(true);
+    newType(name, function () {return "fruit"}, "pear", "p");
+    expect(mayUseName(name)).toBe(false);
+    // type pairs work as expected
+    expect(
+      types[name][0]("p")
+    ).toEqual(jasmine.any(Object));
+    expect (
+      types[name][1](void 0)
+    ).toEqual("fruit");
+  });
+
+  it ("deals with no 'name'", function () {
+    var nil = Object.create(null);
+    newType(
+      function () {
+        return arguments[0] === nil;
+      },
+      "nill", "n", "N"
+    );
+    expect(
+      function () {
+        return charge(nil, "N")
+      }()
+    ).toBe(true);
+  });
+
+  it ("prevent alias collision", function () {
+    expect("Object" in types).toBe(true);
+    expect(newType.bind(null, function (){}, "obj")).toThrowError(
+      "alias 'obj' is taken"
+    );
+  });
+});
+
+function mayUseName (key) {
+  return !(key in types);
+}
