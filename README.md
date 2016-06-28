@@ -3,13 +3,13 @@
 Charge
 ======
 
-#####Installation
+## Installation
 ```cmd
 > npm install ch-arge
 var charge = require("ch-arge");
 ```
 
-#####Usage
+## Usage
 ```js
 // TODO: sync with example
 
@@ -22,12 +22,9 @@ function accountInfo(name, birthyear, data) {
 }
 ```
 
-#####Basic RegExp Supported
+## Seperators
 
-In order to enable easy checkup of a value, if a string is used as the
-second arguments to `charge`, it is parsed using the supported types.
-* `!` negates a type
-* `,` seperates possibilities
+`|`, `,`, and `(whitespace)` may be used as seperators.
 
 ```js
 function accountInfo(name, birthyear, data) {
@@ -39,7 +36,7 @@ function accountInfo(name, birthyear, data) {
 }
 ```
 
-#####Supported Types
+## Bundled Types
 
 
 |*Type*     |*Supported As*   |*Shorthand*|
@@ -65,7 +62,7 @@ function accountInfo(name, birthyear, data) {
 |float      |"float"          |"flt"      |
 |boolean    |"boolean"        |"bool"     |
 
-##### How Types are Determined
+### How Types are Determined
 
 Thing `a` is said to be of type `A` if it passed the following checks:
 
@@ -100,3 +97,11 @@ Exceptions and caveats to the rules are as follows:
 * types `nteger`, `Number`, `number`, and `float` does not include `NaN`, `NaN`
   has it's own type
 * `Infinity` is of type `number`, `float`, but _not_ `integer` or `Number`
+
+## Defining New Types
+
+`charge.newType ([name], checkFn, alias1 [,alias2] [,aliasn])`
+
+## ArgError
+
+`charge.ArgError`
