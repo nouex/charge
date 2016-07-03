@@ -61,6 +61,7 @@ function accountInfo(name, birthyear, data) {
 |integer    |"integer"        |"int"      |
 |float      |"float"          |"flt"      |
 |boolean    |"boolean"        |"bool"     |
+|NaN        |"NaN"            |"nan"      |
 
 ### How Types are Determined
 

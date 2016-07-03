@@ -88,6 +88,10 @@ describe ("bundled types", function () {
           Boolean(0),
           Boolean(""),
           Boolean(new Boolean)
+        ],
+        "NaN": [
+          NaN,
+          NaN + 1
         ]
       };
 
@@ -171,6 +175,11 @@ describe ("bundled types", function () {
           0,
           NaN,
           ""
+        ],
+        "NaN": [
+          true,
+          false,
+          1
         ]
       };
 
@@ -220,13 +229,15 @@ describe ("bundled types", function () {
         "number": ["number", "num"],
         "integer": ["integer", "int"],
         "float": ["float", "flt"],
-        "boolean": ["bool", "boolean"]
+        "boolean": ["bool", "boolean"],
+        "NaN": ["NaN", "Nan", "naN", "nan"]
       };
 
       var badStrs = {
         "Object": [
           "", "o", "one-two-obj", "onetwoobj", "one_obj_two"
-        ]
+        ],
+        "NaN": ["nAn"]
       };
 
       var strs, str, reFn;
