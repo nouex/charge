@@ -124,11 +124,12 @@ describe ("newType()", function () {
     expect (
       types[name][1](void 0)
     ).toEqual("fruit");
+    delete types[name];
   });
 
   it ("deals with no 'name'", function () {
-    var nil = Object.create(null);
-    newType(
+    var nil = Object.create(null), id;
+    id = newType(
       function () {
         return arguments[0] === nil;
       },
@@ -139,6 +140,7 @@ describe ("newType()", function () {
         return charge(nil, "N")
       }()
     ).toBe(true);
+    delete types[id];
   });
 
   it ("prevent alias collision", function () {

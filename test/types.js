@@ -189,6 +189,7 @@ describe ("bundled types", function () {
 
         checkFn = types[type][1];
         nextArgs = goodArgs[type];
+        if (!nextArgs) throw new Error("missing test for " + type);
         for (var arg in nextArgs) {
           if (!nextArgs.hasOwnProperty(arg)) continue;
 
@@ -198,6 +199,7 @@ describe ("bundled types", function () {
 
         nextArgs = badArgs[type];
         for (var arg in nextArgs) {
+          if (!nextArgs) throw new Error("missing test for " + type);
           if (!nextArgs.hasOwnProperty(arg)) continue;
 
           debug("checkFn", false, type, checkFn, nextArgs[arg]);
@@ -250,6 +252,7 @@ describe ("bundled types", function () {
         strs = goodStrs[type];
 
         for (var ind in strs) {
+          if (!strs) throw new Error("missing test for " + type);
           if (!strs.hasOwnProperty(ind)) continue;
 
           str = strs[ind];
@@ -259,6 +262,7 @@ describe ("bundled types", function () {
 
         strs = badStrs[type];
         for (var ind in strs) {
+          if (!strs) throw new Error("missing test for " + type);
           if (!strs.hasOwnProperty(ind)) continue;
 
           str = strs[ind];

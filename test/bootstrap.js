@@ -144,6 +144,7 @@ describe ("exports", function () {
       typeO = types[name];
       expect(typeO[0]("A")).not.toBeNull();
       expect(typeO[1]()).toBeUndefined();
+      delete types[name];
       });
   });
 
