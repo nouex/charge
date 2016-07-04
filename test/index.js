@@ -14,7 +14,7 @@ describe ("use case", function () {
   });
 
   it ("instance of, use ret", function () {
-    expect(charge("", Object, false)).toBe(false);
+    expect(charge("", Object, {shouldThrow: false})).toBe(false);
   });
 
   it ("aliases", function () {
@@ -35,7 +35,7 @@ describe("parameters", function () {
   it ("arg2...[argn]", function () {
     // at least one is required
     expect(
-      charge.bind(null, "", false)
+      charge.bind(null, "", {shouldThrow: false})
     ).toThrowError("No type seen");
 
     expect(
@@ -47,53 +47,80 @@ describe("parameters", function () {
           ).not.toThrow();
     // exp, args... shouldTrhow
     expect(
-      charge(new EE, Array, "str Str", EE, false)
+      charge(new EE, Array, "str Str", EE, {shouldThrow: false})
     ).toBe(true);
     // FIXME unrecognized type, should we throw??
     // exp, arg1, arg2 (unrecogznied type)
     expect(
-      charge(String(), "Str, str", "blurt", false)
+      charge(String(), "Str, str", "blurt", {shouldThrow: false})
     ).toBe(true);
     // exp, arg1 (not it), arg2 (it), arg3 (not it)
     expect (
-      charge(String(), "Str", "str", Object, false)
+      charge(String(), "Str", "str", Object, {shouldThrow: false})
     ).toBe(true);
     // exp, arg1arg2, arg3arg4
     expect (
-      charge(null, "Object, obj", "undefined|null", false)
+      charge(null, "Object, obj", "undefined|null", {shouldThrow: false})
     ).toBe(true);
     // doen't repeat construcor checking
     // check log
     charge(new String, String, String);
   });
 
-  it ("boolean should throw", function () {
-    // default
-    expect(
-      function () {charge("blah", String)}
-    ).toThrow();
-    // true
-    expect(
-      function () {charge("blah", String, true)}
-    ).toThrow();
-    // false
-    expect(
-      charge("blah", String, false)
-    ).toBe(false);
+  describe ("opts", function () {
+    it ("`shouldThrow`", function () {
+      // default
+      expect(
+        function () {charge("blah", String)}
+      ).toThrow();
+      // true
+      expect(
+        function () {charge("blah", String, true)}
+      ).toThrow();
+      // false
+      expect(
+        charge("blah", String, {shouldThrow: false})
+      ).toBe(false);
+    });
+
+    it ("`singleCheck`", function () {
+      var ee = new EE;
+      // default: true
+      expect(
+        charge.bind(null, ee, EE, "str")
+      );
+      // true
+      expect(
+        charge( ee, EE, "str",
+                {singleCheck: true, shouldThrow: false}
+                  )
+      ).toBe(true);
+      // false
+      expect(
+        charge( ee, EE, "str",
+                {singleCheck: false, shouldThrow: false}
+                  )
+      ).toBe(false);
+      expect(
+        charge( ee, "obj", EE,
+                {singleCheck: false, shouldThrow: false}
+                  )
+      ).toBe(true);
+    });
   });
 
   it ("negated type", function () {
     // negated
     expect (
-      charge("blah", "!null", false)
+      charge("blah", "!null", {shouldThrow: false})
     ).toBe(true);
     // double negated
     expect (
-      charge(null, "!!null", false)
+      charge(null, "!!null", {shouldThrow: false})
     ).toBe(true);
     // triple negated
     expect (
-      charge("blah", "!!!null", false)
+      charge("blah", "!!!null", {shouldThrow: false})
     ).toBe(true);
   });
 });
@@ -102,7 +129,7 @@ describe ("ArgError", function () {
   it ("instanceof", function () {
     expect(
       function () {
-        charge([], "str", true)
+        charge([], "str", {shouldThrow: true})
       }
     ).toThrowError(charge.ArgError);
     expect((new charge.ArgError) instanceof charge.ArgError).toBe(true);
