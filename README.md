@@ -22,7 +22,7 @@ function accountInfo(name, birthyear, data) {
 }
 ```
 
-## Seperators
+## String Seperators
 
 `|`, `,`, and `(whitespace)` may be used as seperators.
 
@@ -37,9 +37,9 @@ function accountInfo(name, birthyear, data) {
 ```
 
 ## Bundled Types
+<!-- TODO update chart -->
 
-
-|*Type*     |*Supported As*   |*Shorthand*|
+|**Type**     |**Supported As**   |**Shorthand**|
 |-----------|-----------------|-----------|
 |**Complex Types**                        |
 |                                         |
