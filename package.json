@@ -11,7 +11,8 @@
   },
   "devDependencies": {
     "debug": ">=2.2.0",
-    "jasmine": "~2.3.2"
+    "jasmine": "~2.3.2",
+    "ghmd-table": "^0.1.0"
   },
   "repository": {
     "type": "git",
