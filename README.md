@@ -37,8 +37,7 @@ function accountInfo(name, birthyear, data) {
 ```
 
 ## Bundled Types
-<!-- TODO update chart -->
-
+<!--0000-->
 |**Type**     |**Supported As**   |**Shorthand**|
 |-----------|-----------------|-----------|
 |**Complex Types**                        |
@@ -62,6 +61,7 @@ function accountInfo(name, birthyear, data) {
 |float      |"float"          |"flt"      |
 |boolean    |"boolean"        |"bool"     |
 |NaN        |"NaN"            |"nan"      |
+<!--0000-->
 
 ### How Types are Determined
 
