@@ -30,6 +30,8 @@ switch (process.argv[2]) {
     // NOP since this will be ran again by jasmine we just need to set debug
     // before any script reguires bootstrap.js
     break;
+
+  console.log("'ch-arge:table.js' debug mode set");
 }
 
 /**
