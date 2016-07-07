@@ -31,8 +31,8 @@ switch (process.argv[2]) {
     // before any script reguires bootstrap.js
     break;
 
-  console.log("'ch-arge:table.js' debug mode set");
 }
+console.log("'ch-arge:table.js' debug mode set");
 
 /**
   * @param {Boolean} abrupt If we should terminate.
