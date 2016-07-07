@@ -38,29 +38,25 @@ function accountInfo(name, birthyear, data) {
 
 ## Bundled Types
 <!--0000-->
-|**Type**     |**Supported As**   |**Shorthand**|
-|-----------|-----------------|-----------|
-|**Complex Types**                        |
-|                                         |
-|Object     |"Object"         |"Obj"      |
-|Array      |"Array"          |"Arr"      |
-|Function   |"Function"       |"Func","fn"|
-|RegExp     |"RegExp"         |"Reg"      |
-|Date       |"Date"           |           |
-|Symbol     |"Symbol"         |"Sym"      |
-|String     |"String"         |"Str"      |
-|Number     |"Number"         |"Num"      |
-|Boolean    |"Boolean"        |"Bool"     |
-|**Primitive Types**                      |
-|                                         |
-|null       |"null"           |           |
-|undefined  |"undefined"      |           |
-|string     |"string"         |"str"      |
-|number     |"number"         |"num"      |
-|integer    |"integer"        |"int"      |
-|float      |"float"          |"flt"      |
-|boolean    |"boolean"        |"bool"     |
-|NaN        |"NaN"            |"nan"      |
+Type|Aliases|
+:---|:---
+Object|Object</br>object</br>Obj</br>obj</br>
+Array|Array</br>array</br>Arr</br>arr</br>
+Function|Function</br>function</br>Fn</br>fn</br>Func</br>func</br>
+RegExp|RegExp</br>regexp</br>regExp</br>Regexp</br>
+Date|Date</br>date</br>
+Symbol|Symbol</br>symbol</br>Sym</br>sym</br>
+String|String</br>Str</br>
+Number|Number</br>Num</br>
+Boolean|Boolean</br>Bool</br>
+null|null</br>
+undefined|undefined</br>
+string|string</br>str</br>
+number|number</br>num</br>
+integer|integer</br>int</br>
+float|float</br>flt</br>
+boolean|boolean</br>bool</br>
+NaN|NaN</br>Nan</br>naN</br>nan</br>
 <!--0000-->
 
 ### How Types are Determined
