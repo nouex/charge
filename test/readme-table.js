@@ -8,14 +8,13 @@ var fn = require.resolve("../tools/table.js");
 
 describe ("...", function () {
   it ("...", function () {
-    try {
-      c = cp.execSync(
-        "node \"" + fn + "\" --compare"
-      );
-    } catch (_) {
-      fail("either debug state was not set in boostrap.js or table needs update, run `table.js --update` manually")
-
-
+    fn = "" + fn + "";
+    c = cp.spawnSync("node", [fn, "--compare"]);
+    console.log("child stdout: " + c.stdout);
+    console.log("child stderr: " + c.stderr);
+    if (c.error) fail("child errored with:", c.error.toString());
+    if (+c.status !== 0) {
+      console.log("table update needed");process.exit(1);
     }
   });
 
