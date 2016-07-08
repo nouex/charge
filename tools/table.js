@@ -13,6 +13,7 @@ var tableSeparator = "<!--0000-->\r\n";
 var targFile = require.resolve("../README.md");
 var ghmd_table = require("ghmd-table");
 var mapTable = require("./map-table.js");
+var debug = require("debug")("ch-arge:table.js");
 
 switch (process.argv[2]) {
   case "--update":
@@ -55,11 +56,15 @@ function compare (abrupt, _update) {
   expectedTable = convert(table);
 
   if (actualTable === expectedTable) {
+    debug("acutalTable === expectedTable => true");
         if (_update) {
           console.log("table: no update necessary, update aborted");
         }
         else console.log("table: no recent update");
   } else {
+    debug("acutalTable === expectedTable => false");
+    debug("actualTable", actualTable);
+    debug("expectedTable", expectedTable);
     if (!_update) {
       console.log("table needs update, run `table.js --update` manually");
       process.exit(1);
