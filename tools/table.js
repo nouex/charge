@@ -6,6 +6,10 @@
 typeof process.env.DEBUG === "string" ?
   process.env.DEBUG += ",ch-arge:table.js" :
   process.env.DEBUG = "ch-arge:table.js";
+  typeof process.env.DEBUG === "string" ?
+    process.env.DEBUG += ",ch-arge:bootstrap.js" :
+    process.env.DEBUG = "ch-arge:bootstrap.js";
+process.env.DEBUG_COLORS = "true";
 
 var fs = require("fs");
 var path = require("path");
@@ -42,11 +46,21 @@ console.log("'ch-arge:table.js' debug mode set");
 function compare (abrupt, _update) {
   var convert = ghmd_table.convert;
   var table = mapTable.table;
-  var info;
+  var info, debugEnabled;
 
   if (table === null) {
+    debugEnabled = debug.enabled;
+    debug(
+          "compare(), mapTable inactive, loading 'bootstrap.js' %s",
+          debugEnabled ? "in debug mode" : ""
+        );
+    if (debugEnabled)
+    typeof process.env.DEBUG === "string" ?
+      process.env.DEBUG += ",ch-arge:bootstrap.js" :
+      process.env.DEBUG = "ch-arge:bootstrap.js";
     require("../lib/bootstrap.js");
     table = mapTable.table;
+    debug("table loaded:", !!table);
     if (table === null) throw new Error("Unexpected table -> null");
   }
   var actualTable, expectedTable;
