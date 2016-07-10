@@ -101,6 +101,7 @@ function extractFromFile(filename, sep) {
   i2 = readme.lastIndexOf(sep);
   table = readme.slice(i1 + sep.length, i2);
   debug("extractFromFile(): readme file len: %d", readme.length);
+  debug("readme contents: %s", readme);
   debug("extractFromFile(): index of sep: %d", i1);
   debug("extractFromFile(): last index of sep: %d", i2);
   debug("extractFromFile(): table len: %d", table.length);
