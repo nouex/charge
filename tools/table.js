@@ -65,11 +65,11 @@ function compare (abrupt, _update) {
   }
   var actualTable, expectedTable;
 
-  info = extractFromFile(targFile, "<!--0000-->\r\n");
+  info = extractFromFile(targFile, /<!--0000-->(?:\n|\r\n||\r|\n\r)/);
   actualTable = info[1];
   expectedTable = convert(table);
 
-  if (actualTable === expectedTable) {
+  if (compare2(actualTable, expectedTable)) {
     debug("acutalTable === expectedTable => true");
         if (_update) {
           console.log("table: no update necessary, update aborted");
@@ -86,27 +86,79 @@ function compare (abrupt, _update) {
       update(info[0], expectedTable, info[2], info[3]);
       console.log("table: updated");
   }
+
+  function compare2 ($1, $2) {
+    var i, j, last = false;
+    var _1, _2, opp = null;
+
+    i = j = 0;
+
+    for (; i < $1.length; i++, j++) {
+      _1 = $1[i];
+      _2 = $2[j];
+
+      if (i === ($1.length -1)) last = true;
+
+      // A NL (new line) is valid if it's CR|LF|CRLF|LFCR
+      // Without this flexible NL compare, travis-ci fails b/c (I'm surmising)
+      // travis changes our (CRLF) to (CR, or LF).  We are aware that git's def
+      // behavior when commiting is to commit with LF instead of CRLF but when
+      // it is checked out, it replaces them with the intended NL, so I dont
+      // think it's a git err but a travis err.
+      if (_1 === "\n" || _1 === "\r") {
+        opp = opposite(_1);
+        if ($1[i+1] === opp) i++;
+        opp = null;
+        if (i === ($1.length -1)) last = true;
+
+        if (_2 !== "\n" && _2 !== "\r") {
+          return false;
+        } else {
+          opp = opposite(_2);
+          if ($2[j+1] === opp) j++;
+          opp = null;
+          if (last && j !== $2.length -1) {
+            return false;
+          }
+        }
+      } else {
+        if (_1 !== _2) {
+          return false;
+        }
+        // $2 has matched all along but keeps going
+        if (last && j !== $2.length -1) {
+          return false;
+        }
+      }
+    }
+
+    return true;
+
+    function opposite (char) {
+      return char === "\n" ?
+          "\r" :
+          "\n";
+    }
+  }
 }
 
 /**
   * @param {String} filname
-  * @param {String} sep
+  * @param {String|RegExp} sep
   * @return {Array} ret readme, Table and pair of indecees it sliced from
   */
 function extractFromFile(filename, sep) {
   var readme, table, i1, i2, ret = [];
 
   readme = fs.readFileSync(filename, "utf8");
-  i1 = readme.indexOf(sep);
-  i2 = readme.lastIndexOf(sep);
-  table = readme.slice(i1 + sep.length, i2);
+  table = readme.split(sep)[1];
   debug("extractFromFile(): readme file len: %d", readme.length);
   debug("readme contents: %s", readme);
   debug("extractFromFile(): index of sep: %d", i1);
   debug("extractFromFile(): last index of sep: %d", i2);
   debug("extractFromFile(): table len: %d", table.length);
 
-  return [readme, table, i1, i2];
+  return [readme, table];
 }
 
 /**
