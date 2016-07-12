@@ -28,15 +28,11 @@ function mapTable (type, aliases) {
   table.addEntry(2, curry, aliasesConcat);
 }
 
-
 function initTable () {
   table.addHeader("Type", "left");
   table.addHeader("Aliases", "left");
 }
 
-/**
-  * Save to tools/temp-table.md and overwrite if already exists
-  */
 function saveTable () {
   module.exports.table = table;
 }
