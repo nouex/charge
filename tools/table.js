@@ -6,61 +6,68 @@
 typeof process.env.DEBUG === "string" ?
   process.env.DEBUG += ",ch-arge:table.js" :
   process.env.DEBUG = "ch-arge:table.js";
+
+  // TEMP fix for below
   typeof process.env.DEBUG === "string" ?
     process.env.DEBUG += ",ch-arge:bootstrap.js" :
     process.env.DEBUG = "ch-arge:bootstrap.js";
-process.env.DEBUG_COLORS = "true";
+process.env.DEBUG_COLORS = "yes";
+
 
 var fs = require("fs");
-var path = require("path");
-var tableSeparator = "<!--0000-->\r\n";
-var targFile = require.resolve("../README.md");
 var ghmd_table = require("ghmd-table");
 var mapTable = require("./map-table.js");
 var debug = require("debug")("ch-arge:table.js");
 
+var tableSeparator = "<!--0000-->\r\n";
+var targFile = require.resolve("../README.md");
+
 switch (process.argv[2]) {
   case "--update":
     compare(false, true);
-    //freemem();
+    freemem();
     break;
 
   case "--compare":
     // this is the part that's done after we set debug env
     compare(true, false);
-    //freemem();
+    freemem();
     break;
 
   case undefined:
     // NOP since this will be ran again by jasmine we just need to set debug
     // before any script reguires bootstrap.js
+    log("'ch-arge:table.js' debug mode set");
     break;
 
+  default:
+    throw new Error("Unknown option:, " + process.argv[2]);
 }
-console.log("'ch-arge:table.js' debug mode set");
 
 /**
   * @param {Boolean} abrupt If we should terminate.
-  * @return {Boolean} If abrupt is false.
+  * @param {Boolean} _update If we should update when differences exist.
+  * @return {Boolean} Returns only if abrupt is false.
   */
 function compare (abrupt, _update) {
   var convert = ghmd_table.convert;
   var table = mapTable.table;
-  var info, debugEnabled;
+  var info;
 
+  // to compare, it is necessary that bootstrap.js has loaded so we can acces
+  // table which is exposed by it
   if (table === null) {
-    debugEnabled = debug.enabled;
     debug(
           "compare(), mapTable inactive, loading 'bootstrap.js' %s",
-          debugEnabled ? "in debug mode" : ""
+          debug.enabled ? "in debug mode" : ""
         );
-    if (debugEnabled)
-    typeof process.env.DEBUG === "string" ?
+    // FIXME
+    if (debug.enabled)
+    /*typeof process.env.DEBUG === "string" ?
       process.env.DEBUG += ",ch-arge:bootstrap.js" :
-      process.env.DEBUG = "ch-arge:bootstrap.js";
+      process.env.DEBUG = "ch-arge:bootstrap.js"*/;
     require("../lib/bootstrap.js");
     table = mapTable.table;
-    debug("table loaded:", !!table);
     if (table === null) throw new Error("Unexpected table -> null");
   }
   var actualTable, expectedTable;
@@ -70,21 +77,17 @@ function compare (abrupt, _update) {
   expectedTable = convert(table);
 
   if (compare2(actualTable, expectedTable)) {
-    debug("acutalTable === expectedTable => true");
         if (_update) {
-          console.log("table: no update necessary, update aborted");
+          log("table: no update necessary, update aborted");
         }
-        else console.log("table: no recent update");
+        else log("table: no recent update");
   } else {
-    debug("acutalTable === expectedTable => false");
-    debug("actualTable", actualTable);
-    debug("expectedTable", expectedTable);
     if (!_update) {
-      console.log("table needs update, run `table.js --update` manually");
+      log("table needs update, run `table.js --update` manually");
       process.exit(1);
     } else
-      update(info[0], expectedTable, info[2], info[3]);
-      console.log("table: updated");
+      update(info[0], expectedTable);
+      log("table: updated");
   }
 
   function compare2 ($1, $2) {
@@ -152,11 +155,6 @@ function extractFromFile(filename, sep) {
 
   readme = fs.readFileSync(filename, "utf8");
   table = readme.split(sep)[1];
-  debug("extractFromFile(): readme file len: %d", readme.length);
-  debug("readme contents: %s", readme);
-  debug("extractFromFile(): index of sep: %d", i1);
-  debug("extractFromFile(): last index of sep: %d", i2);
-  debug("extractFromFile(): table len: %d", table.length);
 
   return [readme, table];
 }
@@ -164,7 +162,7 @@ function extractFromFile(filename, sep) {
 /**
   *@param {}
   */
-function update (readme, table, i1, i2) {
+function update (readme, table) {
   var table = tableSeparator + table + tableSeparator,
       write, three;
 
@@ -173,6 +171,13 @@ function update (readme, table, i1, i2) {
   fs.writeFile(targFile, write, "utf8");
 }
 
+/**
+  * Set to null so mem is freed on next garbace collection.
+  */
 function freemem() {
   mapTable.table = null;
+}
+
+function log () {
+  process.stdout.write(arguments[0] + "\r\n");
 }
