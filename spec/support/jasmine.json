@@ -4,7 +4,8 @@
     "**/*.js"
   ],
   "helpers": [
-    "helpers/**/*.js"
+    "helpers/**/*.js",
+    "../tools/table.js"
   ],
   "stopSpecOnExpectationFailure": true,
   "random": false
