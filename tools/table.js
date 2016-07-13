@@ -46,7 +46,7 @@ function compare (abrupt, _update) {
   // table which is exposed by it
   if (table === null) {
     // FIXME should we log() or debug() ???
-    debug("compare(), `mapTable` inactive, loading 'bootstrap.js'");
+    log("`mapTable` inactive, loading 'bootstrap.js'");
     require("../lib/bootstrap.js");
     table = mapTable.table;
     if (table === null) throw new Error("Unexpected table -> null");
