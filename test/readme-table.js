@@ -23,6 +23,7 @@ describe ("...", function () {
     else if (+c.status === 111) {
       console.log("table update needed");
       // relay the status code
+      // NOTE: Travis-CI shows that it exited with 1, not 111
       process.exit(111);
     } else if (+c.status !== 0) {
       fail("child exited with status code: " + c.status);
