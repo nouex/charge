@@ -10,6 +10,7 @@ if (/ch-arge:tools\/table.js/i.test(process.env.DEBUG || "")) {
     table: null
   };
 
+  // lazy load
   ghmd_table = require("ghmd-table");
   table = new ghmd_table.Table;
   fs = require("fs");
