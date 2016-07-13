@@ -271,7 +271,6 @@ describe ("bundled types", function () {
 
   function logStderr (section, goodArg, expType, checkFn, subj) {
     var util = require("util");
-    if (process.env.no_debug) return;
     var com = ",",
         crlf = "\r\n",
         sp = "\u0020",
