@@ -23,12 +23,6 @@ switch (process.argv[2]) {
     freemem();
     break;
 
-  case undefined:
-    // NOP since this will be ran again by jasmine we just need to set debug
-    // before any script reguires bootstrap.js
-    log("'ch-arge:table.js' debug mode set");
-    break;
-
   default:
     throw new Error("Unknown option:, " + process.argv[2]);
 }
