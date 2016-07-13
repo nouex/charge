@@ -1,8 +1,5 @@
 "use strict";
 
-typeof process.env.DEBUG === "string" ? process.env.DEBUG += ",ch-arge:index.js" :
-process.env.DEBUG = "ch-arge:index.js";
-
 var charge = require("../lib");
 var types = require("../lib/types.js");
 var EE = require("events");

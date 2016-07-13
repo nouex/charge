@@ -1,9 +1,5 @@
 "use strict";
 
-typeof process.env.DEBUG === "string" ?
-  process.env.DEBUG += ",ch-arge:types.js" :
-  process.env.DEBUG = "ch-arge:types.js";
-
 require("../lib/bootstrap.js");
 var types = require("../lib/types.js");
 
@@ -193,7 +189,7 @@ describe ("bundled types", function () {
         for (var arg in nextArgs) {
           if (!nextArgs.hasOwnProperty(arg)) continue;
 
-          debug("checkFn", true, type, checkFn, nextArgs[arg]);
+          logStderr("checkFn", true, type, checkFn, nextArgs[arg]);
           expect(checkFn(nextArgs[arg])).toBe(true);
         }
 
@@ -202,7 +198,7 @@ describe ("bundled types", function () {
           if (!nextArgs) throw new Error("missing test for " + type);
           if (!nextArgs.hasOwnProperty(arg)) continue;
 
-          debug("checkFn", false, type, checkFn, nextArgs[arg]);
+          logStderr("checkFn", false, type, checkFn, nextArgs[arg]);
           expect(checkFn(nextArgs[arg])).toBe(false);
         }
       }
@@ -256,7 +252,7 @@ describe ("bundled types", function () {
           if (!strs.hasOwnProperty(ind)) continue;
 
           str = strs[ind];
-          debug("reFn", true, "<void>", reFn, str);
+          logStderr("reFn", true, "<void>", reFn, str);
           expect(reFn(str)).not.toBe(null);
         }
 
@@ -266,14 +262,14 @@ describe ("bundled types", function () {
           if (!strs.hasOwnProperty(ind)) continue;
 
           str = strs[ind];
-          debug("reFn", false, "<void>", reFn, str);
+          logStderr("reFn", false, "<void>", reFn, str);
           expect(reFn(str)).toBe(null);
         }
       }
     });
   });
 
-  function debug (section, goodArg, expType, checkFn, subj) {
+  function logStderr (section, goodArg, expType, checkFn, subj) {
     var util = require("util");
     if (process.env.no_debug) return;
     var com = ",",

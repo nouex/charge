@@ -1,9 +1,5 @@
 "use strict";
 
-typeof process.env.DEBUG === "string" ?
-  process.env.DEBUG += ",ch-arge:bootstrap.js" :
-  process.env.DEBUG = "ch-arge:bootstrap.js";
-
 var bootstrap = require("../lib/bootstrap.js");
 var types = require("../lib/types.js");
 

@@ -3,21 +3,10 @@
 // env below, make sure we execute before the initial require("./bootstrap.js").
 // As of now, we do this in helpers of jasmine.json
 
-typeof process.env.DEBUG === "string" ?
-  process.env.DEBUG += ",ch-arge:table.js" :
-  process.env.DEBUG = "ch-arge:table.js";
-
-  // TEMP fix for below
-  typeof process.env.DEBUG === "string" ?
-    process.env.DEBUG += ",ch-arge:bootstrap.js" :
-    process.env.DEBUG = "ch-arge:bootstrap.js";
-process.env.DEBUG_COLORS = "yes";
-
-
 var fs = require("fs");
 var ghmd_table = require("ghmd-table");
 var mapTable = require("./map-table.js");
-var debug = require("debug")("ch-arge:table.js");
+var debug = require("debug")("ch-arge:tools/table.js");
 
 var tableSeparator = "<!--0000-->\r\n";
 var targFile = require.resolve("../README.md");
@@ -57,15 +46,8 @@ function compare (abrupt, _update) {
   // to compare, it is necessary that bootstrap.js has loaded so we can acces
   // table which is exposed by it
   if (table === null) {
-    debug(
-          "compare(), mapTable inactive, loading 'bootstrap.js' %s",
-          debug.enabled ? "in debug mode" : ""
-        );
-    // FIXME
-    if (debug.enabled)
-    /*typeof process.env.DEBUG === "string" ?
-      process.env.DEBUG += ",ch-arge:bootstrap.js" :
-      process.env.DEBUG = "ch-arge:bootstrap.js"*/;
+    // FIXME should we log() or debug() ???
+    debug("compare(), `mapTable` inactive, loading 'bootstrap.js'");
     require("../lib/bootstrap.js");
     table = mapTable.table;
     if (table === null) throw new Error("Unexpected table -> null");

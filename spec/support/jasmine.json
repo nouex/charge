@@ -5,7 +5,7 @@
   ],
   "helpers": [
     "helpers/**/*.js",
-    "../tools/table.js"
+    "../tools/set-debug.js"
   ],
   "stopSpecOnExpectationFailure": true,
   "random": false

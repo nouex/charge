@@ -8,8 +8,13 @@ var fn = require.resolve("../tools/table.js");
 
 describe ("...", function () {
   it ("...", function () {
+    var env = process.env,
+        opts = {env:env};
+
+    env.DEBUG = "ch-arge:tools/table.js";
+
     fn = "" + fn + "";
-    c = cp.spawnSync("node", [fn, "--compare"]);
+    c = cp.spawnSync("node", [fn, "--compare"], opts);
     console.log("child stdout: " + c.stdout);
     console.log("child stderr: " + c.stderr);
     if (c.error) fail("child errored with:", c.error.toString());

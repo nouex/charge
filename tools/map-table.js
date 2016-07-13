@@ -1,20 +1,25 @@
 "use strict";
 
-var table, curry = 0, fs, ghmd_table, path;
+var table, curry = 0, fs, ghmd_table;
 
-if (/ch-arge:table.js/i.test(process.env.DEBUG || "")) {
+if (/ch-arge:tools\/table.js/i.test(process.env.DEBUG || "")) {
   module.exports = {
     mapTable: mapTable,
     saveTable: saveTable,
     initTable: initTable,
     table: null
   };
+
   ghmd_table = require("ghmd-table");
   table = new ghmd_table.Table;
   fs = require("fs");
-  path = require("path");
 } else {
-  module.exports = function NOP () {};
+  module.exports = {
+    mapTable: NOP,
+    saveTable: NOP,
+    initTable: NOP,
+    table: null
+  };
 }
 
 function mapTable (type, aliases) {
@@ -36,3 +41,5 @@ function initTable () {
 function saveTable () {
   module.exports.table = table;
 }
+
+function NOP () {}
