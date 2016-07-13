@@ -11,7 +11,9 @@ describe ("...", function () {
     var env = process.env,
         opts = {env:env};
 
-    env.DEBUG = "ch-arge:tools/table.js";
+    // So we don't repeat debug() logs in child that were logged in parent
+    // we reset DEBUG.
+    env.DEBUG = "";
 
     fn = "" + fn + "";
     c = cp.spawnSync("node", [fn, "--compare"], opts);

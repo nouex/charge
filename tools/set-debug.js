@@ -1,10 +1,12 @@
 "use strict";
 
-var assert = require("assert");
-
 /**
-  * Assuming npm debug @ 2.2.0
+  * Assuming we use npm debug @ 2.2.0.
+  * Will only set debug namespaces for lib/
   */
+  
+var assert = require("assert");
+var setMode = require("./helpers.js").setMode;
 
 process.env.DEBUG === undefined ? process.env.DEBUG = "" : void 0;
 process.env.DEBUG_COLORS === undefined ?
@@ -17,25 +19,3 @@ assert.strictEqual(true, setMode("ch-arge:lib/types.js"));
 // but when it's set debug() will log in the first color again b/c it's been
 // loaded again (i think cyan)
 // assert.strictEqual(true, setMode("ch-arge:tools/table.js"));
-
-/**
-  * Adds namespace to `process.env.DEBUG` if not there already.
-  * NOTE: namespace is typed to RegExp implicitly
-  */
-function setMode (namespace) {
-  var DEBUG = process.env.DEBUG,
-      regexp = new RegExp(escape(namespace), "i"),
-      pre;
-
-  if (undefined === DEBUG) throw new Error("`process.env.DEBUG` => undefined");
-  if (regexp.test(DEBUG)) return false;
-  else {
-    DEBUG.length ? pre = "," : pre = "";
-    process.env.DEBUG = DEBUG += pre + namespace;
-    return true;
-  }
-
-  function escape (string) {
-    return string.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-  }
-}

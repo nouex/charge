@@ -1,8 +1,13 @@
 "use strict";
-// NOTE a sneaky bug is when lib/bootstrap.js executes before we set the debug
-// env below, make sure we execute before the initial require("./bootstrap.js").
-// As of now, we do this in helpers of jasmine.json
 
+// set debug namespace
+process.env.DEBUG === undefined ? process.env.DEBUG = "" : void 0;
+process.env.DEBUG_COLORS === undefined ?
+  process.env.DEBUG_COLORS = "yes" : void 0;
+var setMode = require("./helpers.js").setMode;
+setMode("ch-arge:tools/table.js");
+
+// imports
 var fs = require("fs");
 var ghmd_table = require("ghmd-table");
 var mapTable = require("./map-table.js");
