@@ -50,7 +50,8 @@ String|String</br>Str</br>
 Number|Number</br>Num</br>
 Boolean|Boolean</br>Bool</br>
 null|null</br>
-undefined|ubr>
+undefined|undefined</br>
+string|string</br>str</br>
 number|number</br>num</br>
 integer|integer</br>int</br>
 float|float</br>flt</br>
