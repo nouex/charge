@@ -65,7 +65,7 @@ function compare (abrupt, _update) {
   } else {
     if (!_update) {
       log("table needs update, run `table.js --update` manually");
-      process.exit(1);
+      process.exit(111);
     } else
       update(info[0], expectedTable);
       log("table: updated");

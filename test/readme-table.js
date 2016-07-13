@@ -20,8 +20,12 @@ describe ("...", function () {
     console.log("child stdout: " + c.stdout);
     console.log("child stderr: " + c.stderr);
     if (c.error) fail("child errored with:", c.error.toString());
-    if (+c.status !== 0) {
-      console.log("table update needed");process.exit(1);
+    else if (+c.status === 111) {
+      console.log("table update needed");
+      // relay the status code
+      process.exit(111);
+    } else if (+c.status !== 0) {
+      fail("child exited with status code: " + c.status);
     }
   });
 
