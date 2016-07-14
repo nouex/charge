@@ -23,20 +23,32 @@ if (/ch-arge:tools\/table.js/i.test(process.env.DEBUG || "")) {
   };
 }
 
+var headers = ["Type", "Aliases"];
+
 function mapTable (type, aliases) {
-  var aliasesConcat = "";
+  var aliasesConcat = "", rowLen = type.length,
+      needsBr = false, maxRowLen = Math.max(headers[1].length, 25);
 
   curry += 1;
   table.addEntry(1, curry, type);
   aliases.forEach(function (alias, ind) {
-    aliasesConcat += alias + "</br>";
+    rowLen += alias.length;
+    if (rowLen > maxRowLen) needsBr = true;
+    // consider space
+    !needsBr ? rowLen += 1 : void 0;
+    if (rowLen > maxRowLen) needsBr = true;
+    aliasesConcat += alias + (needsBr ? "</br>" : "\u0020");
+    if (needsBr) {
+      needsBr = false;
+      rowLen = 0;
+    }
   }, null);
   table.addEntry(2, curry, aliasesConcat);
 }
 
 function initTable () {
-  table.addHeader("Type", "left");
-  table.addHeader("Aliases", "left");
+  table.addHeader(headers[0], "left");
+  table.addHeader(headers[1], "left");
 }
 
 function saveTable () {

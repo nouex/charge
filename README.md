@@ -9,57 +9,87 @@ Charge
 var charge = require("ch-arge");
 ```
 
-## Usage
+## Example Usage
+<!-- make sure it's synced with example/all-features.js-->
 ```js
-// TODO: sync with example
+var charge = require("ch-arge");
 
-function accountInfo(name, birthyear, data) {
-  charge(name, String);
-  charge(birthyear, Number);
-  charge(data, Object);
+function accountInfo(name, birthyear, data1, data2, userData) {
+  // add new type that only accepts a or b
+  charge.newType("ab", function (actual) {
+    for (var i = 0; i < actual.length; i++) {
+      if (actual[i] !== "a" or actual[i] !== "b") return false;
+    }
+  }, "ba");
 
-  // use arguments as expected
+  charge.newType("userData", function (actual) {
+    return actual.length < 10;
+  }, "ud");
+
+  charge(name, String, {shouldThrow: false});
+  charge(birthyear, "num Num|str,Str Date");
+  charge(data1, "ab", {shouldThrow: true});
+  charge(data2, "ba", {shouldThrow: true});
+  charge(userData, "!null !undefined ud", {singleCheck: false});
+
+  // logic that makes use of args
 }
 ```
 
-## String Seperators
+## API
 
-`|`, `,`, and `(whitespace)` may be used as seperators.
+### `charge(actual, expected1[, expected2...][,opts])`
+Returns a boolean, depending on the actual matching any (or all if
+`opts.singleCheck` is off) of the given expected types.
 
-```js
-function accountInfo(name, birthyear, data) {
-  charge(name, "str"); // shorthand "string" type
-  charge(birthyear, "Date|int");
-  charge(data, Object);
+* `actual`, the unknown type to be type asserted
+* `expected`, may be either a Constructor or string, string may contain type
+  aliases separated by `|`, `,`, or `(whitespace)`. `!` prepended to the type
+  alias will match the type if it isn't of that type.  Multiple `!!` are
+  supported.
+* `opts`
+  * `shouldThrow`, throws `ArgError` instance if actual fails to match a type.
+    Defaults to true.
+  * `singleCheck`, if false will pass if it matches all given expected types.
+    Defaults to true.
 
-  // use arguments as expected
-}
-```
+### `charge.newType ([name], checkFn, alias1 [,alias2] [,alias...])`
+Defines a new type known by name (if provided) and aliases.  Returns name.
+
+* `name`, for internal use and semantic debugging, if provided acts like an
+  alias
+* `checkFn`, first parameter must be prepared to receive the actual being tested
+  for.  The return should be boolean and determines if it is of that type.
+* `alias`, A string value of names the type should be reference as.
+
+### `charge.ArgError`
+The constructor for the error thrown if `opts.shouldThrow` is on, inherits from `Error`.
 
 ## Bundled Types
+
 <!--0000-->
 Type|Aliases|
 :---|:---
-Object|Object</br>object</br>Obj</br>obj</br>
-Array|Array</br>array</br>Arr</br>arr</br>
-Function|Function</br>function</br>Fn</br>fn</br>Func</br>func</br>
-RegExp|RegExp</br>regexp</br>regExp</br>Regexp</br>
-Date|Date</br>date</br>
-Symbol|Symbol</br>symbol</br>Sym</br>sym</br>
-String|String</br>Str</br>
-Number|Number</br>Num</br>
-Boolean|Boolean</br>Bool</br>
-null|null</br>
-undefined|undefined</br>
-string|string</br>str</br>
-number|number</br>num</br>
-integer|integer</br>int</br>
-float|float</br>flt</br>
-boolean|boolean</br>bool</br>
-NaN|NaN</br>Nan</br>naN</br>nan</br>
+Object|Object object Obj obj</br>
+Array|Array array Arr arr 
+Function|Function function</br>Fn fn Func func 
+RegExp|RegExp regexp regExp</br>Regexp 
+Date|Date date 
+Symbol|Symbol symbol Sym sym</br>
+String|String Str 
+Number|Number Num 
+Boolean|Boolean Bool 
+null|null 
+undefined|undefined 
+string|string str 
+number|number num 
+integer|integer int 
+float|float flt 
+boolean|boolean bool 
+NaN|NaN Nan naN nan 
 <!--0000-->
 
-### How Types are Determined
+### How Bundled Types are Determined
 
 Thing `a` is said to be of type `A` if it passed the following checks:
 
@@ -91,14 +121,6 @@ Thing `a` is said to be of type `A` if it passed the following checks:
 Exceptions and caveats to the rules are as follows:
 
 * `typeof null === "object"` does node apply for `null`
-* types `nteger`, `Number`, `number`, and `float` does not include `NaN`, `NaN`
+* types `integer`, `Number`, `number`, and `float` do not include `NaN`, `NaN`
   has it's own type
 * `Infinity` is of type `number`, `float`, but _not_ `integer` or `Number`
-
-## Defining New Types
-
-`charge.newType ([name], checkFn, alias1 [,alias2] [,aliasn])`
-
-## ArgError
-
-`charge.ArgError`
