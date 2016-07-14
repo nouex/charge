@@ -167,11 +167,19 @@ describe ("newType()", function () {
     delete types[id];
   });
 
-  it ("prevent alias collision", function () {
+  it ("prevent name collision", function () {
+    // NOTE 'name': Object already taken" is not the error mess b/c the check
+    // for alias comes before this one
     expect("Object" in types).toBe(true);
-    expect(newType.bind(null, function (){}, "obj")).toThrowError(
-      "alias 'obj' is taken"
+    expect(newType.bind(null, function (){}, "Object")).toThrowError(
+      "alias 'Object' is taken"
     );
+  });
+
+  it ("prevent alias collision", function () {
+    // "obj" is an alias of Object, part of the bunbled types
+    expect(newType.bind(null, function (){}, "obj")).toThrowError(
+      "alias 'obj' is taken");
   });
 });
 
