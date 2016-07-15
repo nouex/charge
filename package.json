@@ -24,7 +24,8 @@
     "check"
   ],
   "files": [
-    "lib"
+    "lib",
+    "tools"
   ],
   "author": "Reece Hudson <reecehudson10@gmail.com>",
   "license": "MIT",
