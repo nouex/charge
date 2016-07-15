@@ -52,6 +52,8 @@ Returns a boolean, depending on the actual matching any (or all if
     Defaults to true.
   * `singleCheck`, if false will pass if it matches all given expected types.
     Defaults to true.
+  * `message`, if provided will override the default ArgError message.  Must be
+    a string, or else will error.
 
 ### `charge.newType ([name], checkFn, alias1 [,alias2] [,alias...])`
 Defines a new type known by name (if provided) and aliases.  Returns name.
@@ -71,22 +73,22 @@ The constructor for the error thrown if `opts.shouldThrow` is on, inherits from 
 Type|Aliases|
 :---|:---
 Object|Object object Obj obj</br>
-Array|Array array Arr arr 
-Function|Function function</br>Fn fn Func func 
-RegExp|RegExp regexp regExp</br>Regexp 
-Date|Date date 
+Array|Array array Arr arr
+Function|Function function</br>Fn fn Func func
+RegExp|RegExp regexp regExp</br>Regexp
+Date|Date date
 Symbol|Symbol symbol Sym sym</br>
-String|String Str 
-Number|Number Num 
-Boolean|Boolean Bool 
-null|null 
-undefined|undefined 
-string|string str 
-number|number num 
-integer|integer int 
-float|float flt 
-boolean|boolean bool 
-NaN|NaN Nan naN nan 
+String|String Str
+Number|Number Num
+Boolean|Boolean Bool
+null|null
+undefined|undefined
+string|string str
+number|number num
+integer|integer int
+float|float flt
+boolean|boolean bool
+NaN|NaN Nan naN nan
 <!--0000-->
 
 ### How Bundled Types are Determined

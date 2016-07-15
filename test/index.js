@@ -106,6 +106,16 @@ describe("parameters", function () {
     });
   });
 
+  it ("`message`", function () {
+    // default
+    expect(charge.bind(null, "sss", "obj")).toThrowError("Wrong type: 'sss'");
+    // custom
+    expect(charge.bind(null, "", "obj", {message: "bad"})).toThrowError("bad");
+    // wrong message type
+    expect(charge.bind(null, true, "bool", {message: {}})).
+    toThrowError(/'message' must be type string/);
+  });
+
   it ("negated type", function () {
     // negated
     expect (
